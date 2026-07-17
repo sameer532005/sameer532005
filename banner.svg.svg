@@ -1,0 +1,211 @@
+<!-- Refer to visual representation in image_1.png -->
+<svg width="1280" height="740" viewBox="0 0 1280 740" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <!-- Character image from image_0.png, extracted and embedded as base64 PNG -->
+    <image id="character" href="data:image/png;base64,...(base64 data for character, chair, and books from image_0.png)..." x="300" y="100" width="680" height="540"/>
+    
+    <!-- Neon purple glows -->
+    <filter id="purpleGlow">
+      <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Character Scan Line -->
+    <linearGradient id="scanGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#bf00ff" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#bf00ff" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#bf00ff" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Character Reveal Mask -->
+    <mask id="characterMask">
+      <rect width="100%" height="100%" fill="white"/>
+      <rect id="scanLine" x="300" y="100" width="680" height="10" fill="url(#scanGradient)">
+        <!-- One-time hologram formation -->
+        <animate attributeName="y" from="100" to="640" dur="2s" fill="freeze" begin="0s"/>
+        <animate attributeName="height" from="10" to="540" dur="2s" fill="freeze" begin="0s"/>
+      </rect>
+    </mask>
+
+    <!-- Continuous Scanner Mask -->
+    <mask id="continuousScannerMask">
+      <rect width="100%" height="100%" fill="white"/>
+      <rect x="0" y="0" width="1280" height="10" fill="white">
+        <!-- Full-width scanner sweep every 3.5s -->
+        <animate attributeName="y" from="0" to="740" dur="3.5s" repeatCount="indefinite"/>
+      </rect>
+    </mask>
+
+    <!-- Typwriter Animation for script name -->
+    <style>
+      @keyframes type {
+        from { width: 0; }
+        to { width: 100%; }
+      }
+      @keyframes popIn {
+        0% { transform: scale(0); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+      .typed-name path {
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 1000;
+        animation: type 2s steps(10) forwards;
+        filter: url(#purpleGlow);
+      }
+      .pop-in-letter {
+        animation: popIn 0.5s ease-out forwards;
+        opacity: 0;
+      }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="740" fill="#121212"/>
+
+  <!-- Character with reveal mask -->
+  <use href="#character" mask="url(#characterMask)"/>
+  
+  <!-- Continuous scanner on character area only, clipped to rounded banner -->
+  <g clip-path="url(#bannerClip)">
+    <rect x="300" y="100" width="680" height="540" fill="none" stroke="url(#scanGradient)" stroke-width="2" mask="url(#continuousScannerMask)"/>
+  </g>
+
+  <!-- Terminal Typing Line -->
+  <text x="50" y="50" font-family="monospace" font-size="20" fill="#bf00ff">
+    user@dev:~$ cat README.md<tspan fill="#bf00ff">_</tspan>
+    <animate attributeName="opacity" values="0;1;0" dur="1s" repeatCount="indefinite" begin="0.5s"/>
+  </text>
+  
+  <!-- Name with gradient and pop-in letters -->
+  <g class="typed-name" transform="translate(150, 40)" filter="url(#purpleGlow)">
+    <linearGradient id="nameGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff00ff"/>
+      <stop offset="100%" stop-color="#bf00ff"/>
+    </linearGradient>
+    <!-- Script font converted to vector outlines -->
+    <path d="M...S...a...m...e...e...r..." fill="url(#nameGradient)" stroke="url(#nameGradient)" stroke-width="1.5">
+      <animate attributeName="stroke-dashoffset" from="1000" to="0" dur="2s" begin="2.5s" fill="freeze"/>
+    </path>
+    <!-- Pop-in letters: a, m, e, e, r, R, a, j -->
+    <text x="170" y="0" font-family="script" font-size="60" fill="url(#nameGradient)" class="pop-in-letter" style="animation-delay: 2.7s;">a</text>
+    <text x="210" y="0" font-family="script" font-size="60" fill="url(#nameGradient)" class="pop-in-letter" style="animation-delay: 2.9s;">m</text>
+    <text x="250" y="0" font-family="script" font-size="60" fill="url(#nameGradient)" class="pop-in-letter" style="animation-delay: 3.1s;">e</text>
+    <text x="290" y="0" font-family="script" font-size="60" fill="url(#nameGradient)" class="pop-in-letter" style="animation-delay: 3.3s;">e</text>
+    <text x="330" y="0" font-family="script" font-size="60" fill="url(#nameGradient)" class="pop-in-letter" style="animation-delay: 3.5s;">r</text>
+    <text x="400" y="0" font-family="script" font-size="60" fill="url(#nameGradient)" class="pop-in-letter" style="animation-delay: 3.7s;">R</text>
+    <text x="440" y="0" font-family="script" font-size="60" fill="url(#nameGradient)" class="pop-in-letter" style="animation-delay: 3.9s;">a</text>
+    <text x="480" y="0" font-family="script" font-size="60" fill="url(#nameGradient)" class="pop-in-letter" style="animation-delay: 4.1s;">j</text>
+  </g>
+
+  <!-- Cycling Roles -->
+  <text x="50" y="110" font-family="monospace" font-size="24" fill="#bf00ff">
+    <tspan>AI &amp; Web Developer</tspan>
+    <animate attributeName="opacity" values="1;0;0;0" dur="12s" repeatCount="indefinite" begin="4.5s"/>
+  </text>
+  <text x="50" y="110" font-family="monospace" font-size="24" fill="#bf00ff">
+    <tspan>Pythonista</tspan>
+    <animate attributeName="opacity" values="0;1;0;0" dur="12s" repeatCount="indefinite" begin="4.5s"/>
+  </text>
+  <text x="50" y="110" font-family="monospace" font-size="24" fill="#bf00ff">
+    <tspan>Deep Learning Engineer</tspan>
+    <animate attributeName="opacity" values="0;0;1;0" dur="12s" repeatCount="indefinite" begin="4.5s"/>
+  </text>
+  <text x="50" y="110" font-family="monospace" font-size="24" fill="#bf00ff">
+    <tspan>Web3 Explorer</tspan>
+    <animate attributeName="opacity" values="0;0;0;1" dur="12s" repeatCount="indefinite" begin="4.5s"/>
+  </text>
+
+  <!-- Typed Quote Box -->
+  <g transform="translate(50, 150)">
+    <rect width="550" height="60" rx="10" fill="none" stroke="#bf00ff" stroke-width="2" filter="url(#purpleGlow)"/>
+    <text x="20" y="35" font-family="monospace" font-size="20" fill="#bf00ff">
+      <tspan>Weaving machine learning</tspan>
+      <tspan x="20" y="55">into the fabric of the web.</tspan>
+      <animate attributeName="width" from="0" to="530" dur="4s" begin="6.5s" fill="freeze"/>
+    </text>
+  </g>
+
+  <!-- Tech-stack pills (fade in and hover) -->
+  <g transform="translate(50, 240)">
+    <style>
+      .tech-pill { opacity: 0; transition: opacity 0.5s ease-out; }
+      .tech-pill:hover { filter: url(#purpleGlow); transform: scale(1.1); transition: filter 0.3s, transform 0.3s; }
+    </style>
+    <!-- Define a pill template -->
+    <symbol id="pillTemplate" viewBox="0 0 100 30">
+      <rect width="100" height="30" rx="15" fill="#bf00ff" opacity="0.2"/>
+      <rect width="100" height="30" rx="15" fill="none" stroke="#bf00ff" stroke-width="1.5"/>
+    </symbol>
+    <!-- Place pills -->
+    <g class="tech-pill" style="animation: fadeIn 0.5s 7s forwards;">
+      <use href="#pillTemplate" x="0" y="0"/><text x="20" y="20" font-family="monospace" font-size="14" fill="#bf00ff">Python</text>
+    </g>
+    <g class="tech-pill" style="animation: fadeIn 0.5s 7.2s forwards;">
+      <use href="#pillTemplate" x="110" y="0"/><text x="130" y="20" font-family="monospace" font-size="14" fill="#bf00ff">SQL</text>
+    </g>
+    <!-- Add other pills from the skill list -->
+  </g>
+
+  <!-- About Me lines -->
+  <g transform="translate(50, 320)" font-family="monospace" font-size="20" fill="#bf00ff">
+    <text x="0" y="20">👋 Hi, I'm Sameer!</text>
+    <text x="0" y="60">🤖 I build dreams with AI and code.</text>
+    <text x="0" y="100">🌐 Obsessed with intelligent web interfaces.</text>
+    <text x="0" y="140">🚀 Always learning, always building.</text>
+  </g>
+
+  <!-- Stats Bar -->
+  <g transform="translate(50, 480)">
+    <text x="0" y="20" font-family="monospace" font-size="20" fill="#bf00ff">STABILITY READOUT</text>
+    <rect x="0" y="30" width="400" height="20" rx="10" fill="#bf00ff" opacity="0.2"/>
+    <rect x="0" y="30" width="380" height="20" rx="10" fill="#bf00ff" filter="url(#purpleGlow)">
+      <animate attributeName="width" from="0" to="380" dur="2s" begin="8s" fill="freeze"/>
+    </rect>
+  </g>
+
+  <!-- Code-Editor Card -->
+  <g transform="translate(980, 50)" clip-path="url(#cardClip)">
+    <rect width="250" height="150" rx="10" fill="#1a1a1a" stroke="#bf00ff" stroke-width="2" filter="url(#purpleGlow)"/>
+    <text x="10" y="25" font-family="monospace" font-size="14" fill="#bf00ff">
+      <tspan>function buildDreams() {</tspan>
+      <tspan x="10" y="45">  const future = new AI();</tspan>
+      <tspan x="10" y="65">  const web = new WebExperience();</tspan>
+      <tspan x="10" y="85">  return < FutureWeb future={future} web={web} />;</tspan>
+      <tspan x="10" y="105">}</tspan>
+      <!-- Typing animation snippet line-by-line -->
+      <animate attributeName="visibility" values="hidden;visible;hidden" dur="1s" repeatCount="indefinite" begin="0s"/>
+      <!-- Add separate animations for each line for typing effect -->
+    </text>
+  </g>
+
+  <!-- Neon Sign -->
+  <g transform="translate(980, 220)">
+    <rect width="250" height="80" rx="10" fill="#1a1a1a" stroke="#bf00ff" stroke-width="2" filter="url(#purpleGlow)"/>
+    <text x="125" y="45" font-family="monospace" font-size="24" fill="#bf00ff" text-anchor="middle" filter="url(#purpleGlow)">
+      <tspan>KEEP CODING</tspan>
+      <tspan x="125" y="70">KEEP GROWING</tspan>
+      <animate attributeName="opacity" values="0;1;0.8;1;0.5;1;0.2;1" dur="2s" repeatCount="indefinite" begin="0s"/>
+    </text>
+  </g>
+
+  <!-- Floating Atmosphere Elements -->
+  <g>
+    <!-- Rising particles -->
+    <circle cx="1200" cy="700" r="3" fill="#bf00ff" opacity="0.8">
+      <animate attributeName="cy" from="700" to="100" dur="15s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Twinkling sparkles -->
+    <path d="M...star..." fill="#bf00ff" filter="url(#purpleGlow)">
+      <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
+    </path>
+    <!-- Floating hearts and orbs -->
+  </g>
+
+  <!-- Rounded Corner Clip for the banner -->
+  <clipPath id="bannerClip">
+    <rect width="1280" height="740" rx="20"/>
+  </clipPath>
+</svg>
